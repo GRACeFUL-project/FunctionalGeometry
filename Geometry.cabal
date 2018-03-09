@@ -16,7 +16,11 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Geometry
+                     , Image
+                     , Fish
   build-depends:       base >= 4.7 && < 5
+                     , Rasterific
+                     , JuicyPixels
                      , Rasterific
   default-language:    Haskell2010
 
