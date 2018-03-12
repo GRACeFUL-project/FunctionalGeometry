@@ -18,23 +18,27 @@ flip = transformX $ \x -> 1.0 - x
 over :: Image -> Image -> Image
 over = overlay
 
-besideS :: Float -> Float -> Image -> Image -> Image
+besideS :: Int -> Int -> Image -> Image -> Image
 besideS lr rr l r = sl `over` sr
  where 
-  sl = transformX (\x -> x * lr)      l
-  sr = transformX (\x -> x * rr + lr) r
+  lr' = fromIntegral lr / fromIntegral (lr+rr) 
+  rr' = fromIntegral rr / fromIntegral (lr+rr)
+  sl  = transformX (\x -> x * lr')       l
+  sr  = transformX (\x -> x * rr' + lr') r
 
 beside :: Image -> Image -> Image
-beside = besideS 0.5 0.5
+beside = besideS 1 1
 
-aboveS :: Float -> Float -> Image -> Image -> Image
+aboveS :: Int -> Int -> Image -> Image -> Image
 aboveS tr br t b = st `over` sb
  where 
-  st = transformY (\y -> y * tr) t
-  sb = transformY (\y -> y * br + tr) b
+  tr' = fromIntegral tr / fromIntegral (tr+br) 
+  br' = fromIntegral br / fromIntegral (tr+br)
+  st  = transformY (\y -> y * tr') t
+  sb  = transformY (\y -> y * br' + tr') b
 
 above :: Image -> Image -> Image
-above = aboveS 0.5 0.5
+above = aboveS 1 1 
 
 rot :: Image -> Image
 rot = transform $ \(x, y) -> (y, 1.0 - x)

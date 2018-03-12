@@ -33,9 +33,9 @@ corner n = quartet (corner (n-1)) (side (n-1)) (rot (side (n-1))) u
 nonet :: Image -> Image -> Image -> Image -> Image 
       -> Image -> Image -> Image -> Image -> Image
 nonet p q r s t u v w x = 
-  aboveS 0.33 0.67 (besideS 0.33 0.67 p (beside q r)) 
-  (above           (besideS 0.33 0.67 s (beside t u)) 
-                   (besideS 0.33 0.67 v (beside w x)))
+  aboveS 1 2 (besideS 1 2 p (beside q r)) 
+  (above     (besideS 1 2 s (beside t u)) 
+             (besideS 1 2 v (beside w x)))
 
 squarelimit :: Int -> Image
 squarelimit n = scale 1000 $
