@@ -2,6 +2,7 @@
 
 module Fish
   ( squarelimit
+  , fish
   ) where
 
 import Prelude hiding (cycle, flip)
