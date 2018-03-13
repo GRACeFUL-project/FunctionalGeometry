@@ -6,12 +6,15 @@ module Image
   , Point
   , transform, transformX, transformY, scale
   , overlay
-  , writeImage
+  , writeImage, encodeImage
   ) where
 
-import Codec.Picture (PixelRGBA8(..), writePng)
+import Codec.Picture (PixelRGBA8(..), writePng, encodePng)
+import qualified Codec.Picture as JP
 import Graphics.Rasterific hiding (Point, transform)
 import Graphics.Rasterific.Texture
+import Data.ByteString.Base64.Lazy (encode)
+import Data.ByteString.Lazy (ByteString)
 
 -- Types
 newtype Image = Image [CubicBezier] deriving Show  -- an image is an list of cubic bezier lines
@@ -47,11 +50,16 @@ scale n = transform (\(x, y) -> (x*n, y*n))
 
 -- Write image to file
 writeImage :: FilePath -> Image -> IO ()
-writeImage file (Image cbs) = writePng file img
+writeImage file = writePng file . render
+
+encodeImage :: Image -> ByteString
+encodeImage = encode . encodePng . render
+
+render :: Image -> JP.Image PixelRGBA8
+render (Image cbs) = renderDrawing 1000 1000 white texture
  where 
   white   = PixelRGBA8 255 255 255 255
   black   = PixelRGBA8   0   0   0 255
-  img     = renderDrawing 1000 1000 white texture
   texture = withTexture (uniformTexture black) drawing
   drawing = mconcat $ map (\b -> stroke 1 JoinRound (CapRound, CapRound) b) cbs
 
