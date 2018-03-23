@@ -7,6 +7,7 @@ module Geometry
   , above, aboveS
   , rot45
   , over
+  , natrec
   ) where
 
 import Prelude hiding (flip)
@@ -45,3 +46,7 @@ rot = transform $ \(x, y) -> (y, 1.0 - x)
 
 rot45 :: Image -> Image
 rot45 = transform $ \(x, y) -> ((x + y) / 2, (y - x) / 2)
+
+natrec :: Image -> (Int -> Image -> Image) -> Int -> Image
+natrec b f 0 = b
+natrec b f n = f n (natrec b f (n-1))
