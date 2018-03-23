@@ -22,18 +22,15 @@ quartet p q r s = above (beside p q) (beside r s)
 cycle :: Image -> Image
 cycle p = quartet p (rot p) (rot (rot p)) (rot (rot (rot p)))
 
-{-side :: Int -> Image-}
-{-side 0 = blank-}
-{-side n = quartet (side (n-1)) (side (n-1)) (rot t) t-}
-
 side :: Int -> Image
 side = natrec blank f
  where
   f n img = quartet img img (rot t) t
 
 corner :: Int -> Image
-corner 0 = blank
-corner n = quartet (corner (n-1)) (side (n-1)) (rot (side (n-1))) u
+corner = natrec blank f 
+ where 
+  f n img = quartet img (side (n-1)) (rot (side (n-1))) u
 
 nonet :: Image -> Image -> Image -> Image -> Image 
       -> Image -> Image -> Image -> Image -> Image
