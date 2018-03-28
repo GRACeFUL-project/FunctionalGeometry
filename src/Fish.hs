@@ -30,7 +30,7 @@ side = natrec blank f
 corner :: Int -> Image
 corner = natrec blank f 
  where 
-  f n img = quartet img (side (n-1)) (rot (side (n-1))) u
+  f n img = quartet img (side n) (rot (side n)) u
 
 nonet :: Image -> Image -> Image -> Image -> Image 
       -> Image -> Image -> Image -> Image -> Image

@@ -49,4 +49,4 @@ rot45 = transform $ \(x, y) -> ((x + y) / 2, (y - x) / 2)
 
 natrec :: Image -> (Int -> Image -> Image) -> Int -> Image
 natrec b f 0 = b
-natrec b f n = f n (natrec b f (n-1))
+natrec b f n = f (n-1) (natrec b f (n-1))
